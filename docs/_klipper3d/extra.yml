@@ -5,8 +5,7 @@ extra:
     provider: google
     property: UA-138371409-1
   # Language Selection
-  alternate:  
+  alternate:
     - name: English
       link: /en/
       lang: en
-
