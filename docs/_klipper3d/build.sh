@@ -10,7 +10,6 @@ set -e
 MKDOCS_DIR="docs/_klipper3d/"
 
 # Prepare English Fallback
-touch "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}en.yml"
 # search must be insertede here to ensure it's placed in plugins
 cat "${MKDOCS_DIR}search_en.yml" >> "${MKDOCS_DIR}en.yml"
@@ -42,7 +41,7 @@ while IFS="," read dirname langname langdesc note; do
   else
       echo "Manually translated index file for $langname not found!"
   fi
-  
+
   # Insert entries to extra.yml for language switching
   echo  -e "    - name: ${langdesc}\n      link: /${langname}/\n      lang: ${langname}\n" >> "${MKDOCS_DIR}extra.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
@@ -50,14 +49,13 @@ done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
 while IFS="," read dirname langname langdesc note; do
   # create language specific directory configurations
 
-  touch "${langname}.yml"
   cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}${langname}.yml"
   # create language specific search configuration, must be after base.yml
   echo -e "  search:\n      lang: ${langname}\n" >> "${MKDOCS_DIR}${langname}.yml"
   # add directories
   echo -e "docs_dir: '../${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
   echo -e "site_dir: '../../site/${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
-  
+
   # create language specific naviagtion table (TODO, reserved)
   cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}${langname}.yml"
   # build sites
