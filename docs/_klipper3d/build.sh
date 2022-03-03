@@ -44,7 +44,7 @@ while IFS="," read dirname langname langdesc note; do
   fi
   
   # Insert entries to extra.yml for language switching
-  echo "      - name: ${langdesc}\n      link: /${langname}/\n      lang: ${langname}\n" >> "${MKDOCS_DIR}extra.yml"
+  echo  -e "    - name: ${langdesc}\n      link: /${langname}/\n      lang: ${langname}\n" >> "${MKDOCS_DIR}extra.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
 
 while IFS="," read dirname langname langdesc note; do
@@ -53,10 +53,10 @@ while IFS="," read dirname langname langdesc note; do
   touch "${langname}.yml"
   cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}${langname}.yml"
   # create language specific search configuration, must be after base.yml
-  echo "  search:\n      lang: ${langname}\n" >> "${MKDOCS_DIR}${langname}.yml"
+  echo -e "  search:\n      lang: ${langname}\n" >> "${MKDOCS_DIR}${langname}.yml"
   # add directories
-  echo "docs_dir: '../${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
-  echo "site_dir: '../../site/${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
+  echo -e "docs_dir: '../${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
+  echo -e "site_dir: '../../site/${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
   
   # create language specific naviagtion table (TODO, reserved)
   cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}${langname}.yml"
