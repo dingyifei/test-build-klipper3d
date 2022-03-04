@@ -71,5 +71,7 @@ cat "${MKDOCS_DIR}search_en.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}dir_en.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
-rm -rf site/en
 mkdocs build -f "docs/_klipper3d/en.yml"
+
+#Set en to default
+mv site/en/* site/

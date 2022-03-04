@@ -7,5 +7,5 @@ extra:
   # Language Selection
   alternate:
     - name: English
-      link: /en/
+      link: /
       lang: en
