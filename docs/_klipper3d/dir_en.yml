@@ -1,2 +1,2 @@
-docs_dir: '..'
-site_dir: '../../site'
+docs_dir: '../en'
+site_dir: '../../site/en'
