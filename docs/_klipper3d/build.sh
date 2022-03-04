@@ -19,6 +19,8 @@ cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
 mkdir docs/en
 mv docs/*.md docs/en/
 cp -r docs/img docs/en/img
+cp -r docs/prints docs/en/prints
+
 
 # generate fall back files
 mkdocs build -f docs/_klipper3d/en.yml
@@ -61,6 +63,7 @@ while IFS="," read dirname langname langdesc note; do
   cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}${langname}.yml"
   # copy resources
   cp -r docs/img "docs/${langname}/img"
+  cp -r docs/prints "docs/${langname}/prints"
   # build sites
   mkdocs build -f "docs/_klipper3d/${langname}.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
