@@ -31,15 +31,15 @@ git clone --depth 1 https://github.com/Klipper3d/klipper-translations
 while IFS="," read dirname langname langdesc note; do
   new_local_dir="docs/${langname}"
   local_dir="klipper-translations/docs/locales/$dirname"
-  mkdir $new_local_dir
+  mkdir "$new_local_dir"
   # move and rename markdown files
   echo "Moving $dirname to $langname"
   mv "$local_dir"/*.md "$new_local_dir"
 
   # manually replace index.md if a manual-index.md exist
-  manual_index="${new_local_dir}manual-index.md"
-  if [[ -f "${new_local_dir}/$manual_index" ]];then
-    mv "${new_local_dir}/$manual_index" "${new_local_dir}/index.md"
+  manual_index="${new_local_dir}/manual-index.md"
+  if [[ -f "$manual_index" ]];then
+    mv -f "$manual_index" "${new_local_dir}/index.md"
     echo "replaced index.md with manual_index.md for $langname"
   else
       echo "Manually translated index file for $langname not found!"
@@ -77,4 +77,4 @@ cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
 mkdocs build -f "docs/_klipper3d/en.yml"
 
 #Set en to default
-mv site/en/* site/
+mv -f site/en/* site/
