@@ -36,8 +36,8 @@ while IFS="," read dirname langname langdesc note; do
 
   # manually replace index.md if a manual-index.md exist
   manual_index="${new_local_dir}manual-index.md"
-  if [[ -f "$manual_index" ]];then
-    mv "$manual_index" "${new_local_dir}/index.md"
+  if [[ -f "${new_local_dir}/$manual_index" ]];then
+    mv "${new_local_dir}/$manual_index" "${new_local_dir}/index.md"
     echo "replaced index.md with manual_index.md for $langname"
   else
       echo "Manually translated index file for $langname not found!"
