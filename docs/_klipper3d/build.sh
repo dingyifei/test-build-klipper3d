@@ -18,6 +18,7 @@ cat "${MKDOCS_DIR}dir_en.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
 mkdir docs/en
 mv docs/*.md docs/en/
+cp -r docs/img docs/en/img
 
 # generate fall back files
 mkdocs build -f docs/_klipper3d/en.yml
@@ -58,6 +59,8 @@ while IFS="," read dirname langname langdesc note; do
 
   # create language specific naviagtion table (TODO, reserved)
   cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}${langname}.yml"
+  # copy resources
+  cp -r docs/img "docs/${langname}/img"
   # build sites
   mkdocs build -f "docs/_klipper3d/${langname}.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
