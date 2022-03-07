@@ -11,10 +11,7 @@ MKDOCS_DIR="docs/_klipper3d/"
 
 # Prepare English Fallback
 cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}en.yml"
-# search must be insertede here to ensure it's placed in plugins
-cat "${MKDOCS_DIR}search_en.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}en.yml"
-cat "${MKDOCS_DIR}dir_en.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
 mkdir docs/en
 mv docs/*.md docs/en/
@@ -28,55 +25,54 @@ mkdocs build -f docs/_klipper3d/en.yml
 #fetch translations
 git clone --depth 1 https://github.com/Klipper3d/klipper-translations
 
-while IFS="," read dirname langname langdesc note; do
-  new_local_dir="docs/${langname}"
+while IFS="," read dirname langsite langdesc note; do
+  new_local_dir="docs/${langsite}"
   local_dir="klipper-translations/docs/locales/$dirname"
   mkdir "$new_local_dir"
   # move and rename markdown files
-  echo "Moving $dirname to $langname"
+  echo "Moving $dirname to $langsite"
   mv "$local_dir"/*.md "$new_local_dir"
 
   # manually replace index.md if a manual-index.md exist
   manual_index="${new_local_dir}/manual-index.md"
   if [[ -f "$manual_index" ]];then
     mv -f "$manual_index" "${new_local_dir}/index.md"
-    echo "replaced index.md with manual_index.md for $langname"
+    echo "replaced index.md with manual_index.md for $langsite"
   else
-      echo "Manually translated index file for $langname not found!"
+      echo "Manually translated index file for $langsite not found!"
   fi
 
   # Insert entries to extra.yml for language switching
-  echo  -e "    - name: ${langdesc}\n      link: /${langname}/\n      lang: ${langname}\n" >> "${MKDOCS_DIR}extra.yml"
+  echo  -e "    - name: ${langdesc}\n      link: /${langsite}/\n      lang: ${langsite}\n" >> "${MKDOCS_DIR}extra.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
 
-while IFS="," read dirname langname langdesc note; do
-  # create language specific directory configurations
-
-  cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}${langname}.yml"
-  # create language specific search configuration, must be after base.yml
-  echo -e "  search:\n      lang: ${langname}\n" >> "${MKDOCS_DIR}${langname}.yml"
-  # add directories
-  echo -e "docs_dir: '../${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
-  echo -e "site_dir: '../../site/${langname}'\n" >> "${MKDOCS_DIR}${langname}.yml"
+while IFS="," read dirname langsite langdesc langsearch; do
+  echo "create language specific directory configurations"
+  cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}${langsite}.yml"
+  echo "replace search language"
+  sed -i "s/en #\\*# Search Language/$langsearch/" "${MKDOCS_DIR}${langsite}.yml"
+  echo "replace site language"
+  sed -i "s/en #\\*# Site Language/$langsite/" "${MKDOCS_DIR}${langsite}.yml"
+  echo "add directories"
+  sed -i "s/'..\\/en' #\\*# Markdown File Directory/'..\\/$langsite'/" "${MKDOCS_DIR}${langsite}.yml"
+  sed -i "s/'..\\/..\\/site\\/en' #\\*# Site Directory/'..\\/..\\/site\\/$langsite'/" "${MKDOCS_DIR}${langsite}.yml"
 
   # create language specific naviagtion table (TODO, reserved)
-  cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}${langname}.yml"
+  cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}${langsite}.yml"
 
   # copy extra.yml
-  cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}${langname}.yml"
+  cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}${langsite}.yml"
 
   # copy resources
-  cp -r docs/img "docs/${langname}/img"
-  cp -r docs/prints "docs/${langname}/prints"
+  cp -r docs/img "docs/${langsite}/img"
+  cp -r docs/prints "docs/${langsite}/prints"
   # build sites
-  mkdocs build -f "docs/_klipper3d/${langname}.yml"
+  mkdocs build -f "docs/_klipper3d/${langsite}.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
 
 # remove fall back and rebuild with a correct extra.yml
 cat "${MKDOCS_DIR}base.yml" > "${MKDOCS_DIR}en.yml"
-cat "${MKDOCS_DIR}search_en.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}en.yml"
-cat "${MKDOCS_DIR}dir_en.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
 mkdocs build -f "docs/_klipper3d/en.yml"
 
