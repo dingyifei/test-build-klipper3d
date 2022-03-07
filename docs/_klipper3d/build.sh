@@ -5,7 +5,7 @@
 
 # Give up on building when language specific sites failed. Keep
 # English site avaiable.
-#set -e
+set -e
 
 MKDOCS_DIR="docs/_klipper3d/"
 
