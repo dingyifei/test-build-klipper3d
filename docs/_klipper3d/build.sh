@@ -54,8 +54,8 @@ while IFS="," read dirname langsite langdesc langsearch; do
   echo "replace site language"
   sed -i "s/en #\\*# Site Language/$langsite/" "${MKDOCS_DIR}${langsite}.yml"
   echo "add directories"
-  sed -i "s/\\'..\\/en' #\\*# Markdown File Directory/'..\\/$langsite'/" "${MKDOCS_DIR}${langsite}.yml"
-  sed -i "s/\\'..\\/..\\/site\\/en\\' #\\*# Markdown File Directory/'..\\/..\\/site\\/$langsite'/" "${MKDOCS_DIR}${langsite}.yml"
+  sed -i "s/'..\\/en' #\\*# Markdown File Directory/'..\\/$langsite'/" "${MKDOCS_DIR}${langsite}.yml"
+  sed -i "s/'..\\/..\\/site\\/en' #\\*# Markdown File Directory/'..\\/..\\/site\\/$langsite'/" "${MKDOCS_DIR}${langsite}.yml"
 
   # create language specific naviagtion table (TODO, reserved)
   cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}${langsite}.yml"
