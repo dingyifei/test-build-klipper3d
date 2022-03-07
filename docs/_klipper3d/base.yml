@@ -6,7 +6,9 @@ repo_name: Klipper3d/klipper
 edit_uri: blob/master/docs/
 use_directory_urls: False
 
-# Markdown document translation settings
+docs_dir: '../en' #*# Markdown File Directory
+site_dir: '../../site/en' #*# Site Directory
+
 markdown_extensions:
   - toc:
       permalink: True
@@ -48,6 +50,7 @@ theme:
       - search.suggest
       - search.highlight
       - search.share
+  language: en #*# Site Language
 extra_css:
   - _klipper3d/css/extra.css
 plugins:
@@ -56,3 +59,5 @@ plugins:
       on_page_markdown: "docs._klipper3d.mkdocs_hooks:transform"
   exclude:
     glob: "README.md"
+  search:
+      lang: en #*# Search Language
