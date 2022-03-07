@@ -3943,11 +3943,10 @@ max_accel: 1
 
 <h2 id="common-extruder-and-heated-bed-support">Common extruder and heated bed support<a class="headerlink" href="#common-extruder-and-heated-bed-support" title="Permanent link">&para;</a></h2>
 <h3 id="extruder">[extruder]<a class="headerlink" href="#extruder" title="Permanent link">&para;</a></h3>
-<p>The extruder section is used to describe the heater parameters for the
-nozzle hotend along with the stepper controlling the extruder. See the
-<a href="G-Codes.html#extruder">command reference</a> for additional information.
-See the <a href="Pressure_Advance.html">pressure advance guide</a> for information
-on tuning pressure advance.</p>
+<p>The extruder section is used to describe both the stepper controlling
+the printer extruder and the heater parameters for the nozzle. See the
+<a href="Pressure_Advance.html">pressure advance guide</a> for information on
+tuning pressure advance.</p>
 <div class="highlight"><pre><span></span><code>[extruder]
 step_pin:
 dir_pin:
@@ -3956,10 +3955,7 @@ microsteps:
 rotation_distance:
 #full_steps_per_rotation:
 #gear_ratio:
-#   See the &quot;stepper&quot; section for a description of the above
-#   parameters. If none of the above parameters are specified then no
-#   stepper will be associated with the nozzle hotend (though a
-#   SYNC_EXTRUDER_MOTION command may associate one at run-time).
+#   See the &quot;stepper&quot; section for a description of the above parameters.
 nozzle_diameter:
 #   Diameter of the nozzle orifice (in mm). This parameter must be
 #   provided.
@@ -5012,10 +5008,10 @@ extruder (one may define any number of sections with an
 "extruder_stepper" prefix).</p>
 <p>See the <a href="G-Codes.html#extruder">command reference</a> for more information.</p>
 <div class="highlight"><pre><span></span><code>[extruder_stepper my_extra_stepper]
-extruder:
+#extruder: extruder
 #   The extruder this stepper is synchronized to. If this is set to an
 #   empty string then the stepper will not be synchronized to an
-#   extruder. This parameter must be provided.
+#   extruder. The default is &quot;extruder&quot;.
 #step_pin:
 #dir_pin:
 #enable_pin:

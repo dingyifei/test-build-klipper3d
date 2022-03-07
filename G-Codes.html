@@ -4023,10 +4023,7 @@ commands that one may enter into the OctoPrint terminal tab.</p>
 3rd party software (eg, OctoPrint, Printrun, Slic3r, Cura, etc.) in
 their standard configurations. It is not a goal to support every
 possible G-Code command. Instead, Klipper prefers human readable
-<a href="#additional-commands">"extended G-Code commands"</a>. Similarly, the
-G-Code terminal output is only intended to be human readable - see the
-<a href="API_Server.html">API Server document</a> if controlling Klipper from
-external software.</p>
+<a href="#additional-commands">"extended G-Code commands"</a>.</p>
 <p>If one requires a less common G-Code command then it may be possible
 to implement it with a custom
 <a href="Config_Reference.html#gcode_macro">gcode_macro config section</a>. For
@@ -4373,9 +4370,7 @@ at run-time. The provided VALUE is parsed as a Python literal.</p>
 <p>The gcode_move module is automatically loaded.</p>
 <h4 id="get_position">GET_POSITION<a class="headerlink" href="#get_position" title="Permanent link">&para;</a></h4>
 <p><code>GET_POSITION</code>: Return information on the current location of the
-toolhead. See the developer documentation of
-<a href="Code_Overview.html#coordinate-systems">GET_POSITION output</a> for more
-information.</p>
+toolhead.</p>
 <h4 id="set_gcode_offset">SET_GCODE_OFFSET<a class="headerlink" href="#set_gcode_offset" title="Permanent link">&para;</a></h4>
 <p><code>SET_GCODE_OFFSET [X=&lt;pos&gt;|X_ADJUST=&lt;adjust&gt;]
 [Y=&lt;pos&gt;|Y_ADJUST=&lt;adjust&gt;] [Z=&lt;pos&gt;|Z_ADJUST=&lt;adjust&gt;] [MOVE=1
