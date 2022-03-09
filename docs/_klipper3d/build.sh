@@ -1,29 +1,17 @@
 #!/bin/bash
 # Modify the file structure before running mkdocs
-# This is a make shift script before the current structure of
-# Klipper-translations can be directly utilized by mkdocs
-
-# Give up on building when language specific sites failed. Keep
-# English site avaiable.
-set -e
+# This is a make shift multi-site building script before
+# the current structure of Klipper-translations can be
+# directly utilized by MkDocs.
 
 MKDOCS_DIR="docs/_klipper3d/"
 
-# Prepare English Fallback
-cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}en.yml"
-cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}en.yml"
-cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
-mkdir docs/en
-mv docs/*.md docs/en/
-cp -r docs/img docs/en/img
-cp -r docs/prints docs/en/prints
-
-
-# generate fall back files
-mkdocs build -f docs/_klipper3d/en.yml
-
 #fetch translations
 git clone --depth 1 https://github.com/Klipper3d/klipper-translations
+
+#Move English Markdown Files
+mkdir docs/en
+mv docs/*.md docs/en/
 
 while IFS="," read dirname langsite langdesc note; do
   new_local_dir="docs/${langsite}"
@@ -70,7 +58,7 @@ while IFS="," read dirname langsite langdesc langsearch; do
   mkdocs build -f "docs/_klipper3d/${langsite}.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
 
-# remove fall back and rebuild with a correct extra.yml
+# Build English
 cat "${MKDOCS_DIR}base.yml" > "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
