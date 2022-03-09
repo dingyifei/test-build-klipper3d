@@ -10,6 +10,7 @@ MKDOCS_DIR="docs/_klipper3d/"
 git clone --depth 1 https://github.com/Klipper3d/klipper-translations
 
 #Move English Markdown Files
+mkdir docs/en
 mv docs/*.md docs/en/
 
 while IFS="," read dirname langsite langdesc note; do
