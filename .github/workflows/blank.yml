@@ -20,6 +20,8 @@ jobs:
         run: pip install -r docs/_klipper3d/mkdocs-requirements.txt
       - name: Build MkDocs Pages
         run: docs/_klipper3d/build.sh
+      - name: Fail
+        run: return -1
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
