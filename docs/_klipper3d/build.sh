@@ -9,6 +9,9 @@ MKDOCS_DIR="docs/_klipper3d/"
 #fetch translations
 git clone --depth 1 https://github.com/Klipper3d/klipper-translations
 
+#Move English Markdown Files
+mv docs/*.md docs/en/
+
 while IFS="," read dirname langsite langdesc note; do
   new_local_dir="docs/${langsite}"
   local_dir="klipper-translations/docs/locales/$dirname"
@@ -54,7 +57,7 @@ while IFS="," read dirname langsite langdesc langsearch; do
   mkdocs build -f "docs/_klipper3d/${langsite}.yml"
 done <  <(egrep -v '^ *(#|$)' ./klipper-translations/active_translations)
 
-# remove fall back and rebuild with a correct extra.yml
+# Build English
 cat "${MKDOCS_DIR}base.yml" > "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
