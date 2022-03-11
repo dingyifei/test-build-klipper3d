@@ -3,6 +3,8 @@
 # the deploy workflow failed. It only use the static files and only
 # build the English site.
 # Prepare English Fallback
+MKDOCS_DIR="docs/_klipper3d/"
+
 cat "${MKDOCS_DIR}base.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}extra.yml" >> "${MKDOCS_DIR}en.yml"
 cat "${MKDOCS_DIR}nav_en.yml" >> "${MKDOCS_DIR}en.yml"
