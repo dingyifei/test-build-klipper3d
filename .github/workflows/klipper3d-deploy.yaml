@@ -1,12 +1,6 @@
 name: klipper3d deploy
 on:
   push:
-    branches:
-      - master
-    paths:
-      - docs/**
-      - mkdocs.yml
-      - .github/workflows/klipper3d-deploy.yaml
   schedule:
     - cron: "0 0 * * *"
 jobs:
