@@ -4013,7 +4013,7 @@
 <li>獲取韌體版本：<code>M115</code></li>
 </ul>
 <p>有關上述命令的更多詳細資訊，請參閱 <a href="http://reprap.org/wiki/G-code">RepRap G-Code documentation</a></p>
-<p>Klipper的目標是支援常見第三方軟體（如OctoPrint、Printrun、Slic3r、Cura等）在其標準配置中產生的 G 程式碼命令。支援所有可能的 G-Code 命令並不是我們的目標。相反，Klipper更喜歡人類可讀的<a href="#additional-commands">"擴充套件G-Code命令"</a>。</p>
+<p>Klipper's goal is to support the G-Code commands produced by common 3rd party software (eg, OctoPrint, Printrun, Slic3r, Cura, etc.) in their standard configurations. It is not a goal to support every possible G-Code command. Instead, Klipper prefers human readable <a href="#additional-commands">"extended G-Code commands"</a>. Similarly, the G-Code terminal output is only intended to be human readable - see the <a href="API_Server.html">API Server document</a> if controlling Klipper from external software.</p>
 <p>如果一個人需要一個不太常見的G-Code命令，那麼可以用一個自定義的<a href="Config_Reference.html#gcode_macro">gcode_macro config section</a>來實現它。例如，我們可以用這個來實現。<code>G12</code>, <code>G29</code>, <code>G30</code>, <code>G31</code>, <code>M42</code>, <code>M80</code>, <code>M81</code>, <code>T1</code> ，etc.</p>
 <h2 id="_1">其他命令<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>Klipper使用 "extended" 的G程式碼命令來進行一般的配置和狀態。這些擴充套件命令都遵循一個類似的格式--它們以一個命令名開始，後面可能有一個或多個參數。比如說：<code>SET_SERVO SERVO=myservo ANGLE=5.3</code>。在本檔案中，命令和參數以大寫字母顯示，但它們不分大小寫。(所以，"SET_SERVO "和 "set_servo "都是執行同一個命令）</p>
@@ -4153,7 +4153,7 @@
 <h3 id="gcode_move">[gcode_move]<a class="headerlink" href="#gcode_move" title="Permanent link">&para;</a></h3>
 <p>模組gcode_move 已自動載入.</p>
 <h4 id="get_position">GET_POSITION<a class="headerlink" href="#get_position" title="Permanent link">&para;</a></h4>
-<p><code>GET_POSITION</code>：返回工具目前位置資訊.</p>
+<p><code>GET_POSITION</code>: Return information on the current location of the toolhead. See the developer documentation of <a href="Code_Overview.html#coordinate-systems">GET_POSITION output</a> for more information.</p>
 <h4 id="set_gcode_offset">SET_GCODE_OFFSET<a class="headerlink" href="#set_gcode_offset" title="Permanent link">&para;</a></h4>
 <p><code>SET_GCODE_OFFSET [X=&lt;pos&gt;|X_ADJUST=&lt;adjust&gt;] [Y=&lt;pos&gt;|Y_ADJUST=&lt;adjust&gt;] [Z=&lt;pos&gt;|Z_ADJUST=&lt;adjust&gt;] [MOVE=1 [MOVE_SPEED=&lt;speed&gt;]]</code> 。設定一個位置偏移，以應用於未來的G程式碼命令。這通常用於實際改變Z床的偏移量或在切換擠出機時設定噴嘴的XY偏移量。例如，如果發送 "SET_GCODE_OFFSET Z=0.2"，那麼未來的G程式碼移動將在其Z高度上增加0.2mm。如果使用X_ADJUST風格的參數，那麼調整將被新增到任何現有的偏移上（例如，"SET_GCODE_OFFSET Z=-0.2"，然後是 "SET_GCODE_OFFSET Z_ADJUST=0.3"，將導致總的Z偏移為0.1）。如果指定了 "MOVE=1"，那麼將發出一個工具頭移動來應用給定的偏移量（否則偏移量將在指定給定軸的下一次絕對G-Code移動中生效）。如果指定了 "MOVE_SPEED"，那麼刀頭移動將以給定的速度（mm/s）執行；否則，列印頭移動將使用最後指定的G-Code速度。</p>
 <h4 id="save_gcode_state">SAVE_GCODE_STATE<a class="headerlink" href="#save_gcode_state" title="Permanent link">&para;</a></h4>
